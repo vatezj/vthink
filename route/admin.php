@@ -9,11 +9,23 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
+use app\middleware\admin\AdminAuthMiddleware;
+use app\middleware\admin\Permission;
 
-//Route::get('think', function () {
-//    return 'hello,ThinkPHP6!';
-//});
-//
-//Route::get('hello/:name', 'index/hello');
 
-Route::miss('index/miss');
+Route::group('/admin', function () {
+    Route::post('/login', 'admin.auth/login');
+    Route::post('/logout', 'admin.auth/logout');
+    Route::post('/register', 'admin.auth/register');
+})->allowCrossDomain();
+
+
+Route::group('/admin', function () {
+    Route::get('/info', 'admin.auth/info');
+    Route::get('/get', 'admin.auth/info')->middleware(Permission::class,'getALL');
+})->allowCrossDomain()->middleware(AdminAuthMiddleware::class);
+
+
+
+
+
