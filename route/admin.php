@@ -22,7 +22,7 @@ Route::group('/admin', function () {
 
 Route::group('/admin', function () {
     Route::get('/info', 'admin.auth/info');
-    Route::get('/get', 'admin.auth/info')->middleware(Permission::class,'getALL');
+    Route::get('/get', 'admin.auth/info')->middleware(Permission::class,'1');
 })->allowCrossDomain()->middleware(AdminAuthMiddleware::class);
 
 
