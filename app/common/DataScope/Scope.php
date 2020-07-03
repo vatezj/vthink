@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license  https://github.com/edenleung/think-admin/blob/6.0/LICENSE.txt
  */
 
-namespace app\DataScope;
+namespace app\common\DataScope;
 
 use app\common\model\Dept;
 use app\common\model\User;

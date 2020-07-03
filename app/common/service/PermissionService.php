@@ -79,7 +79,7 @@ class PermissionService extends BaseService
         $actions = $this->model->where('type', 'action')->select();
         $menusIds = $this->model->where('type', 'action')->column('pid');
         $menus = $this->model->whereIn('id', $menusIds)->select();
-        $category = new \Tant\Util\Category();
+        $category = new Category();
 
         foreach ($menus as $menu) {
             $menu->actions = $category->getChild($menu->id, $actions);

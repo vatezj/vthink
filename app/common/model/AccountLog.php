@@ -10,5 +10,5 @@ use app\BaseModel;
 
 class AccountLog extends BaseModel
 {
-    protected $table = 'log';
+    protected $table = 'vthink_log';
 }

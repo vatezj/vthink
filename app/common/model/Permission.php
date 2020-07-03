@@ -7,11 +7,13 @@ declare(strict_types=1);
 namespace app\common\model;
 
 use app\BaseModel;
+use app\common\Contract\PermissionContract;
+use app\common\Contract\RoleContract;
 use app\common\traits\Log;
 use think\model\relation\BelongsToMany;
-use xiaodi\Permission\Contract\RoleContract;
 
-class Permission extends BaseModel
+
+class Permission extends BaseModel implements PermissionContract
 {
     use Log;
     /**

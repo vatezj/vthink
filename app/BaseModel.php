@@ -5,7 +5,8 @@ declare(strict_types=1);
 
 namespace app;
 
-use app\DataScope\Scope;
+
+use app\common\DataScope\Scope;
 use think\Model;
 
 class BaseModel extends Model

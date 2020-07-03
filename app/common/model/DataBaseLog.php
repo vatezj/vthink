@@ -10,5 +10,5 @@ use app\BaseModel;
 
 class DataBaseLog extends BaseModel
 {
-    protected $table = 'db_log';
+    protected $table = 'vthink_db_log';
 }

@@ -10,6 +10,7 @@ use app\BaseService;
 use app\common\model\Role;
 use app\common\model\User;
 use app\common\model\Permission;
+use app\common\Util\Category;
 
 class RoleService extends BaseService
 {
@@ -25,7 +26,7 @@ class RoleService extends BaseService
     {
         $map = [];
         $user = request()->user;
-        $category = new \Tant\Util\Category();
+        $category = new Category();
 
         // 不是超级管理员，只显示当前用户所属角色的所有下级角色
         if ($user->isSuper() === false) {
@@ -142,7 +143,7 @@ class RoleService extends BaseService
     {
         $map = [];
         $user = request()->user;
-        $category = new \Tant\Util\Category();
+        $category = new Category();
 
         // 不是超级管理员，只显示当前用户所属角色的所有下级角色
         if ($user->isSuper() === false) {
@@ -195,7 +196,7 @@ class RoleService extends BaseService
     public function childrenRole(Role $role)
     {
         $roles = Role::select();
-        $category = new \Tant\Util\Category();
+        $category = new Category();
 
         return $category->getTree($roles, $role->id);
     }
@@ -209,7 +210,7 @@ class RoleService extends BaseService
     {
         $roles = $this->model->select();
 
-        $category = new \Tant\Util\Category();
+        $category = new Category();
         $children = $category->getChild($role->id, $roles);
 
         return !empty($children);
@@ -261,7 +262,7 @@ class RoleService extends BaseService
     protected function getChildrenRoleIds(User $user)
     {
         $ids = [];
-        $category = new \Tant\Util\Category();
+        $category = new Category();
 
         $all = $this->model->order('pid asc')->select()->toArray();
 

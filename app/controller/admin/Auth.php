@@ -24,10 +24,10 @@ class Auth extends ApiBaseController
         }
         $info = $service->login($this->request->param('username'), $this->request->param('password'));
         if (!$info) {
-            return dumpInfo($service->getError());
+            return $this->sendError($service->getError());
         }
         $sessionId = $service->makeToken($info);
-        return dumpInfo($sessionId);
+        return $this->sendSuccess(['token' => $sessionId, 'expires_in' => 3600 * 24], '登录成功');
     }
 
     /**
@@ -62,8 +62,8 @@ class Auth extends ApiBaseController
      */
     public function info(UserService $service): Response
     {
+        return  $this->sendSuccess($service->info($this->request->user));
 
-        return dumpInfo( $service->info($this->request->user));
     }
 
 
