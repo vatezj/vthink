@@ -8,13 +8,14 @@ namespace app\common\model;
 
 use app\BaseModel;
 use app\common\Contract\PermissionContract;
+use app\common\Contract\RoleContract;
 use app\common\Contract\UserContract;
 use app\common\traits\Log;
 use think\model\relation\BelongsToMany;
 
 
 
-class Role extends BaseModel
+class Role extends BaseModel implements RoleContract
 {
     use Log;
 

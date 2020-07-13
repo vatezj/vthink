@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license  https://github.com/edenleung/think-admin/blob/6.0/LICENSE.txt
  */
 
-namespace app\admin\controller\log;
+namespace app\controller\admin\log;
 
 use app\BaseController;
 use app\common\service\DataBaseLogService;

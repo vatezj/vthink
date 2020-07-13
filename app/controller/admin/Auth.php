@@ -3,6 +3,7 @@
 namespace app\controller\admin;
 
 
+use app\common\model\UserLoginLog;
 use app\common\service\UserService;
 use app\model\AdminUserModel;
 use app\validate\admin\AdminUserValidate;
@@ -16,7 +17,7 @@ class Auth extends ApiBaseController
      * @param AdminUserValidate $validate
      * @return Response
      */
-    public function login(AdminUserValidate $validate, UserService $service): Response
+    public function login(AdminUserValidate $validate, UserService $service, UserLoginLog $userLoginLog): Response
     {
         $validate->scene('login');
         if (!$validate->validate($this->request->param())) {
@@ -26,8 +27,11 @@ class Auth extends ApiBaseController
         if (!$info) {
             return $this->sendError($service->getError());
         }
-        $sessionId = $service->makeToken($info);
-        return $this->sendSuccess(['token' => $sessionId, 'expires_in' => 3600 * 24], '登录成功');
+        $arr['user_id'] = $info['id'];
+        $arr['ip'] = $this->request->ip();
+        $arr['user_agent'] = request()->header('USER_AGENT');
+        $token = $userLoginLog->_add($arr);
+        return $this->sendSuccess(['token' => $token, 'expires_in' => 3600 * 24], '登录成功');
     }
 
     /**
@@ -62,7 +66,7 @@ class Auth extends ApiBaseController
      */
     public function info(UserService $service): Response
     {
-        return  $this->sendSuccess($service->info($this->request->user));
+        return $this->sendSuccess($service->info($this->request->user));
 
     }
 

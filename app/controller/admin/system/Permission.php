@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 
-
 namespace app\controller\admin\system;
 
 use app\BaseController;
@@ -28,7 +27,7 @@ class Permission extends BaseController
      */
     public function list($pageSize, $pageNo)
     {
-        $result = $this->service->list((int) $pageNo, (int) $pageSize);
+        $result = $this->service->list((int)$pageNo, (int)$pageSize);
 
         return $this->sendSuccess($result);
     }
@@ -43,8 +42,9 @@ class Permission extends BaseController
         if (!$request->scene('create')->validate()) {
             return $this->sendError($request->getError());
         }
-
-        if ($this->service->add($request->param()) === false) {
+        $save = $request->param();
+        if (isset($save[$request->url()])) unset($save[$request->url()]);
+        if ($this->service->add($save) === false) {
             return $this->sendError();
         }
 
@@ -63,8 +63,9 @@ class Permission extends BaseController
         if (!$request->scene('update')->validate()) {
             return $this->sendError($request->getError());
         }
-
-        if ($this->service->renew($id, $request->param()) === false) {
+        $save = $request->param();
+        if (isset($save[$request->url()])) unset($save[$request->url()]);
+        if ($this->service->renew($id, $save) === false) {
             return $this->sendError();
         }
 

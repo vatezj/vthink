@@ -15,10 +15,10 @@ class AllowCrossDomain
 {
     protected $cookieDomain;
     protected $header = [
-        'Access-Control-Allow-Origin' => 'http://localhost:8001',
+        'Access-Control-Allow-Origin' => '*',
         'Access-Control-Allow-Credentials' => 'true',
         'Access-Control-Allow-Methods' => 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers' => 'Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-CSRF-TOKEN, X-Requested-With, authKey, Accept, Origin',
+        'Access-Control-Allow-Headers' => 'Authorization,token, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-CSRF-TOKEN, X-Requested-With, authKey, Accept, Origin',
     ];
 
     public function __construct(Config $config)

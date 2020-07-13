@@ -3,6 +3,7 @@ declare (strict_types=1);
 
 namespace app\middleware\admin;
 
+use app\common\model\UserLoginLog;
 use think\facade\Session;
 use think\Request;
 use think\Response;
@@ -18,14 +19,19 @@ class AdminAuthMiddleware
      */
     public function handle($request, \Closure $next)
     {
-//        return Response::create(['message' => '用户未登录', 'code' => 1], 'json', 401);
-        if ($request->header('Authorization')) {
-            $token = str_replace('auth-token=', '', $request->header('Authorization'));
-            Session::setId($token);
-        }
+        $model = new  UserLoginLog();
 
-        $user = session('login');
-//        return Response::create(['message' => '用户未登录', 'code' => $user], 'json', 401);
+//        return Response::create(['message' => '用户未登录', 'code' => 1], 'json', 401);
+        if ($request->header('token')) {
+            $token = str_replace('auth-token=', '', $request->header('token'));
+            if ($model->checkTokenIsAllow($token)) {
+                $user = $model->user;
+            } else {
+                return Response::create(['message' => $model->getError(), 'code' => 401], 'json', 401);
+            }
+        } else {
+            return Response::create(['message' => $request->header(), 'code' => 111], 'json', 401);
+        }
         if (!$user) {
             return $this->handleNotLoggedIn($request);
         }

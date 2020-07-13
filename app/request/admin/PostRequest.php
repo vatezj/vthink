@@ -31,6 +31,6 @@ class PostRequest extends BaseRequest
 
     protected $scene = [
         'create' => ['post_name', 'post_code'],
-        'update' => ['post_code'],
+        'update' => ['post_name'],
     ];
 }

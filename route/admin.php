@@ -18,7 +18,7 @@ Route::group('/admin/auth', function () {
     Route::post('/login', 'admin.auth/login');
     Route::post('/logout', 'admin.auth/logout');
     Route::post('/register', 'admin.auth/register');
-});
+})->allowCrossDomain();
 
 
 Route::group('/admin/user', function () {

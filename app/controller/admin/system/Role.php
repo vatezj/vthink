@@ -56,8 +56,9 @@ class Role extends BaseController
         if (!$request->scene('create')->validate()) {
             return $this->sendError($request->getError());
         }
-
-        if ($this->service->add($request->param()) === false) {
+        $save = $request->param();
+        if (isset($save[$request->url()])) unset($save[$request->url()]);
+        if ($this->service->add($save) === false) {
             return $this->sendError($this->service->getError());
         }
 
@@ -76,8 +77,9 @@ class Role extends BaseController
         if (!$request->scene('update')->validate()) {
             return $this->sendError($request->getError());
         }
-
-        if ($this->service->renew($id, $request->param()) === false) {
+        $save = $request->param();
+        if (isset($save[$request->url()])) unset($save[$request->url()]);
+        if ($this->service->renew($id, $save) === false) {
             return $this->sendError($this->service->getError());
         }
 
@@ -107,9 +109,9 @@ class Role extends BaseController
      *
      * @return \think\Response
      */
-    public function mode($id)
+    public function mode(RoleRequest $request,$id)
     {
-        $params = $this->request->param();
+        $params = $request->param();
         if ($this->service->updateMode($id, $params) === false) {
             return $this->sendError($this->service->getError());
         }

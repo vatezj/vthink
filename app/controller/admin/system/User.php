@@ -10,6 +10,7 @@ use app\common\service\PermissionService;
 use app\common\service\PostService;
 use app\common\service\RoleService;
 use app\common\service\UserService;
+use app\request\admin\UserRequest;
 use think\Request;
 use app\BaseController;
 
@@ -173,8 +174,8 @@ class User extends BaseController
      */
     public function resetPassword(Request $request)
     {
-        $oldPassword = $this->request->param('oldPassword');
-        $newPassword = $this->request->param('newPassword');
+        $oldPassword = $request->param('oldPassword');
+        $newPassword = $request->param('newPassword');
 
         if (!$oldPassword || !$newPassword) {
             return $this->sendError('数据出错');

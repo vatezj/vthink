@@ -30,6 +30,8 @@ class BaseService
         return $this->model->add($input);
     }
 
+
+
     public function find($id)
     {
         return $this->model->find($id);
@@ -44,4 +46,6 @@ class BaseService
     {
         return $this->model->remove($id);
     }
+
+
 }

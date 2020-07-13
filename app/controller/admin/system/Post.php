@@ -42,7 +42,7 @@ class Post extends BaseController
             return $this->sendError($request->getError());
         }
 
-        if ($this->service->create($request->post()) === false) {
+        if ($this->service->add($request->post()) === false) {
             return $this->sendError();
         }
 
@@ -62,7 +62,7 @@ class Post extends BaseController
             return $this->sendError($request->getError());
         }
 
-        if ($this->service->update($id, $request->put()) === false) {
+        if ($this->service->renew($id, $request->put()) === false) {
             return $this->sendError();
         }
 

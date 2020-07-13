@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 
-
-
 namespace app\controller\admin\system;
 
 use app\BaseController;
@@ -39,14 +37,14 @@ class Dept extends BaseController
      */
     public function create(DeptRequest $request)
     {
-        if (!$request->validate()) {
+        if (!$request->scene('create')->validate()) {
             return $this->sendError($request->getError());
         }
-
-        if (!$this->service->create($request->param())) {
+        $save = $request->param();
+        if (isset($save[$request->url()])) unset($save[$request->url()]);
+        if (!$this->service->add($save)) {
             return $this->sendError($this->service->getError());
         }
-
         return $this->sendSuccess();
     }
 
@@ -59,11 +57,12 @@ class Dept extends BaseController
      */
     public function update($id, DeptRequest $request)
     {
-        if (!$request->validate()) {
+        if (!$request->scene('update')->validate()) {
             return $this->sendError($request->getError());
         }
-
-        if (!$this->service->update($id, $request->param())) {
+        $save = $request->param();
+        if (isset($save[$request->url()])) unset($save[$request->url()]);
+        if (!$this->service->renew($id, $save)) {
             return $this->sendError($this->service->getError());
         }
 

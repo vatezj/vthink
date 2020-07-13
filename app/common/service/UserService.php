@@ -10,6 +10,7 @@ use app\common\model\Role;
 use app\common\model\User;
 use app\common\model\Permission;
 
+use app\common\model\UserLoginLog;
 use think\facade\Session;
 
 class UserService extends BaseService
@@ -19,10 +20,12 @@ class UserService extends BaseService
      * @param User $user
      */
     public $model;
+    public $userLoginLog;
 
-    public function __construct(User $user)
+    public function __construct(User $user,UserLoginLog $userLoginLog)
     {
         $this->model = $user;
+        $this->userLoginLog = $userLoginLog;
     }
 
     /**
@@ -193,7 +196,7 @@ class UserService extends BaseService
      */
     public function renew($id, array $input)
     {
-        $user = $this->find($id);
+        $user = User::find($id);
 
         // 重置密码
         if (isset($input['password'])) {
