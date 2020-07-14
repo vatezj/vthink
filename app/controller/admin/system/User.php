@@ -139,7 +139,7 @@ class User extends BaseController
      */
     public function updateCurrent(Request $request)
     {
-        $data = $this->request->param();
+        $data = $request->param();
         if (empty($data)) {
             return $this->sendError('数据出错');
         }
@@ -158,7 +158,7 @@ class User extends BaseController
      */
     public function avatar(Request $request)
     {
-        $file = $this->request->file('file');
+        $file = $request->file('file');
         $savename = \think\facade\Filesystem::disk('public')->putFile('topic', $file);
         if (!$this->service->updateAvatar($request->user, $savename)) {
             return $this->sendError('更新失败');
