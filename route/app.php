@@ -14,6 +14,6 @@ use think\facade\Route;
 //    return 'hello,ThinkPHP6!';
 //});
 //
-//Route::get('hello/:name', 'index/hello');
+Route::get('/', 'index/index');
 
 Route::miss('index/miss');
