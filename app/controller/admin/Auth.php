@@ -8,6 +8,7 @@ use app\common\service\UserService;
 use app\model\AdminUserModel;
 use app\validate\admin\AdminUserValidate;
 use think\facade\Session;
+use think\Request;
 use think\Response;
 
 
@@ -70,5 +71,9 @@ class Auth extends ApiBaseController
 
     }
 
+    public function logout(Request $request, UserLoginLog $userLoginLog): Response
+    {
+        return $this->sendSuccess($userLoginLog->logout($request->token));
+    }
 
 }

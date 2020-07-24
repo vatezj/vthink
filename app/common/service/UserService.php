@@ -36,10 +36,12 @@ class UserService extends BaseService
     public function login(string $username, string $password)
     {
         $user = $this->model->getByName($username);
+
         if (empty($user)) {
             $this->error = "用户不存在";
             return false;
         }
+
         if (!$this->verifyPassword($user, $password)) {
             $this->error = "密码错误";
             return false;
@@ -55,7 +57,6 @@ class UserService extends BaseService
     public function verifyPassword(User $user, string $password)
     {
         $pwd_peppered = hash_hmac('sha256', $password, $user->hash);
-
         return \password_verify($pwd_peppered, $user->password);
     }
 

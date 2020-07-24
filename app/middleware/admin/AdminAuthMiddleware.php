@@ -20,14 +20,13 @@ class AdminAuthMiddleware
     public function handle($request, \Closure $next)
     {
         $model = new  UserLoginLog();
-
-//        return Response::create(['message' => '用户未登录', 'code' => 1], 'json', 401);
         if ($request->header('token')) {
             $token = str_replace('auth-token=', '', $request->header('token'));
+            $request->token = $token;
             if ($model->checkTokenIsAllow($token)) {
                 $user = $model->user;
             } else {
-                return Response::create(['message' => $model->getError(), 'code' => 401], 'json', 401);
+                return Response::create(['message' => $model->getError(), 'code' => 50002], 'json', 401);
             }
         } else {
             return Response::create(['message' => $request->header(), 'code' => 111], 'json', 401);

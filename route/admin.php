@@ -16,7 +16,6 @@ $header['Access-Control-Allow-Origin'] = '*';
 
 Route::group('/admin/auth', function () {
     Route::post('/login', 'admin.auth/login');
-    Route::post('/logout', 'admin.auth/logout');
     Route::post('/register', 'admin.auth/register');
 })->allowCrossDomain();
 
@@ -25,7 +24,9 @@ Route::group('/admin/user', function () {
     Route::get('/info', 'admin.auth/info');
     Route::get('/get', 'admin.auth/info')->middleware(Permission::class, '1');
 })->middleware(AdminAuthMiddleware::class);
-
+Route::post('/admin/auth/logout', 'admin.auth/logout')
+    ->allowCrossDomain()
+    ->middleware(AdminAuthMiddleware::class);
 
 // 模拟数据（可删除）
 Route::group('/admin/mock', function () {

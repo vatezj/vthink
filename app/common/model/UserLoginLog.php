@@ -35,6 +35,15 @@ class UserLoginLog extends BaseModel
         }
     }
 
+    public function logout(string $token): bool
+    {
+        $save['status'] = 0;
+        if ($this->where('token', $token)->save($save)) {
+            return true;
+        }
+        return  false;
+    }
+
     /**
      * @param string $user_id
      * @return string
@@ -48,12 +57,16 @@ class UserLoginLog extends BaseModel
 
     public function checkTokenIsAllow(string $token)
     {
-        $info = $this->where(['token'=>$token])
-            ->field('user_id,login_time,action_time')
+        $info = $this->where(['token' => $token])
+            ->field('user_id,login_time,action_time,status')
             ->find();
         if ($info) {
-            $this->user = User::find($info['user_id']);
-            return true;
+            if($info->status == 1){
+                $this->user = User::find($info['user_id']);
+                return true;
+            }
+            $this->error = 'token过期';
+            return false;
         } else {
             $this->error = $token;
             return false;
